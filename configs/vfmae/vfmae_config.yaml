@@ -1,0 +1,43 @@
+encoder_config:
+  target: tokenizer.vfmae.layers.Encoder
+  # target: paintmind.titok.layers.Encoder
+  params:
+    layer_type: normal
+    image_size: 256
+    patch_size: 16
+    dim: 512
+    in_channels: 1024
+    depth: 6
+    num_head: 8
+    mlp_dim: 2048
+    dim_head: 64
+    dropout: 0.1
+    n_carrier: 256
+    enc_n_points: 4
+    visual_encoder_config:
+      target: commons.modules.encoders.pretrained_enc_arch.SelfSupervisedCondtionEmbedder
+      # target: paintmind.modules.encoders.pretrained_enc_arch.SelfSupervisedCondtionEmbedder
+      is_trainable: False
+      params:
+        pretrained_enc_arch: dinov2_vitl14_reg
+        pretrained_enc_path: init_models/dinov2/dinov2_vitl14_reg4_pretrain.pth
+        pretrained_enc_withproj: False
+        proj_dim: 1024
+        height: 224
+        width: 224
+
+decoder_config:
+  target: tokenizer.vfmae.layers.Decoder
+  # target: paintmind.titok.layers.Decoder
+  # target: modules.encoders.pretrained_enc_arch.SelfSupervisedCondtionEmbedder
+  params:
+    layer_type: normal
+    image_size: ${encoder_config.params.image_size}
+    patch_size: ${encoder_config.params.patch_size}
+    dim: ${encoder_config.params.dim}
+    depth: ${encoder_config.params.depth}
+    num_head: ${encoder_config.params.num_head}
+    mlp_dim: ${encoder_config.params.mlp_dim}
+    dim_head: ${encoder_config.params.dim_head}
+    dropout: ${encoder_config.params.dropout}
+    n_carrier: ${encoder_config.params.n_carrier}
