@@ -29,7 +29,7 @@ This repo contains:
 - [2025/09/18] 🔥 **VFMTok has been accepted by NeurIPS 2025!** 🔥
 - [2025/10/11] 🔥 [Image tokenizers](https://huggingface.co/yexiguafu/VFMTok/tree/main/DINOv2/tokenizer) and [AR models](https://huggingface.co/yexiguafu/VFMTok/tree/main/DINOv2) for class-conditional image generation are released. 🔥
 - [2025/10/11] 🔥 All codes of VFMTok have been released. 🔥
-- [2026/05/20] 🔥 Continuous-valued [VFMAE](https://huggingface.co/yexiguafu/VFMTok/tree/main/DINOv2/tokenizer) for [denoising generative models](https://huggingface.co/yexiguafu/VFMTok/tree/main/DINOv2/DiTDH-XL) has been released, Checkout the [paper](https://arxiv.org/pdf/2605.18390v1) for details. 🔥
+- [2026/05/20] 🔥 Continuous-valued [VFMAE](https://huggingface.co/yexiguafu/VFMTok/tree/main/tokenizer) for [denoising generative models](https://huggingface.co/yexiguafu/VFMTok/tree/main/DiTDH-XL) has been released, Checkout the [paper](https://arxiv.org/pdf/2605.18390v1) for details. 🔥
 
 ## Contents
 - [Install](#install)
