@@ -123,7 +123,7 @@ def main(args):
     if is_main_process():
         print('#DataLoader: {}, num_tasks: {}'.format(len(data_loader), num_tasks))
 
-    (samples, gt, psnr_val_rgb, ssim_val_rgb) = gen_images(model, data_loader, device, args)
+    posteriors = gen_images(model, data_loader, device, args)
     if is_main_process():
 
         posteriors = torch.cat(posteriors, dim=0)
