@@ -138,7 +138,7 @@ scripts/autoregressive/torchrun.sh vqgan_train.py  --image-size 336 --results-di
 ```
 
 
-1. Training VFMAE(DINOv2) tokenizer (see ```scripts/tokenizer/train_ae.sh```):
+2. Training VFMAE(DINOv2) tokenizer (see ```scripts/tokenizer/train_ae.sh```):
 
 ```bash
 export NODE_COUNT=1
@@ -150,6 +150,16 @@ scripts/autoregressive/torchrun.sh  \
     ae_train.py  --image-size 256 --results-dir output --mixed-precision none --global-batch-size 256 --num-workers 4  \
     --data-path imagenet/lmdb/train_lmdb --ckpt-every 5000 --transformer-config configs/vfmae/vfmae_config.yaml  \
     --epochs 50 --log-every 1 --lr 1e-4 --ema --z-channels 512 --embed-dim 32 --disc-start 20000 
+```
+
+3. Calculating encoder statistics (mean/variance) for VFMAE (see ```scripts/denoise/compute_stats.sh```)
+```bash
+export NODE_COUNT=1
+export NODE_RANK=0
+export PROC_PER_NODE=8
+scripts/autoregressive/torchrun.sh  \
+        compute_stats.py --ae-model AE-16 --image-size 256 --batch-size 50 --embed-dim 32 --z-channels 512     \
+        --anno-file imagenet/lmdb/train_lmdb --ae-ckpt DINOv2/tokenizer/vfmae-tokenizer.pt
 ```
 
 ### 3. AR generative model training

@@ -164,7 +164,7 @@ def gen_images(model, dataloader, device, args=None):
 
         posteriors.append(posterior)
 
-        if i > 9:
+        if i > 999:
             break
 
     return posteriors
