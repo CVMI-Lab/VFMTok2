@@ -17,7 +17,7 @@ This is a PyTorch/GPU implementation of the paper **Vision Foundation Models as 
 
 To this end, we extend this idea to the continuous-valued domain and devised a new continuous-valued tokenizer, dubbed **VFMAE**, for both image reconstruction and generation in continuous space. In addition to retaining the original two key components introduced in the previous work — **region-adaptive sampling** to reduce redundancy in the latent feature and the **semantic reconstruction objective** to preserve semantic fidelity, we also thoroughly investigated the optimal architecture for continuous-valued image reconstruction and generation.
 
-Similarly, for continuous-space generation, integrating **VFMAE** with a denoising model yields an exceptional gFID of **1.25** and enables high-fidelity class-conditional synthesis without classifier-free guidance (w/o CFG) across both generative paradigms. Beyond these remarkable empirical results, we systematically investigate the underlying mechanisms of **VFMTok/VFMAE** and discovered that the specific self-supervised learning objectives utilized during VFM pre-training dictate its effectiveness as a tokenizer. Specifically, **a VFM jointly optimized with global contrastive learning and latent masked image modeling** provides the optimal representations for image tokenization.
+Similarly, for continuous-space generation, integrating **VFMAE** with a denoising model yields an exceptional gFID of **1.25** and enables high-fidelity class-conditional synthesis without classifier-free guidance (w/o CFG). Beyond these remarkable empirical results, we systematically investigate the underlying mechanisms of **VFMTok/VFMAE** and discovered that the specific self-supervised learning objectives utilized during VFM pre-training dictate its effectiveness as a tokenizer. Specifically, **a VFM jointly optimized with global contrastive learning and latent masked image modeling** provides the optimal representations for image tokenization.
 
 This repo contains:
 
@@ -123,8 +123,8 @@ ln -s ImageNetFolder imagenet
 ```bash
 export NODE_COUNT=1
 export NODE_RANK=0
-export PROC_PER_NODE=8 # tokenizer/utils/vqgan_train.py
-scripts/autoregressive/torchrun.sh vqgan_train.py  --image-size 336 --results-dir output --mixed-precision bf16 --codebook-slots-embed-dim 12    \
+export PROC_PER_NODE=8 # see tokenizer/utils/vqgan_train.py
+scripts/autoregressive/torchrun.sh vqgan_train.py  --image-size 336 --results-dir output --mixed-precision bf16 --embed-dim 12    \
     --data-path imagenet/lmdb/train_lmdb --global-batch-size 16 --num-workers 4 --ckpt-every 5000 --epochs 50 \
     --transformer-config configs/vfmtok/vfmtok_config.yaml --log-every 1 --lr 1e-4 --ema --z-channels 512
 ```
@@ -137,8 +137,8 @@ export NODE_COUNT=1
 export NODE_RANK=0
 export PROC_PER_NODE=8
 export MASTER_PORT=12333
-export MASTER_ADDR=localhost
-scripts/autoregressive/torchrun.sh  \
+export MASTER_ADDR=localhost # see tokenizer/utils/ae_train.py
+scripts/autoregressive/torchrun.sh  \ 
     ae_train.py  --image-size 256 --results-dir output --mixed-precision none --global-batch-size 256 --num-workers 4  \
     --data-path imagenet/lmdb/train_lmdb --ckpt-every 5000 --transformer-config configs/vfmae/vfmae_config.yaml  \
     --epochs 50 --log-every 1 --lr 1e-4 --ema --z-channels 512 --embed-dim 32 --disc-start 20000 
@@ -149,6 +149,11 @@ scripts/autoregressive/torchrun.sh  \
 1. Training AR generative models (see ```scripts/autoregressive/run_train.sh```)
 
 ```bash
+export NODE_COUNT=1
+export NODE_RANK=0
+export PROC_PER_NODE=8
+export MASTER_PORT=12333
+export MASTER_ADDR=localhost 
 model_type='GPT-L' # 'GPT-B' 'GPT-XL' 'GPT-XXL' 'GPT-2B'
 scripts/autoregressive/torchrun.sh train_c2i.py --gpt-type c2i --image-size 336 --gpt-model ${model_type} --downsample-size 16 --num-workers 4   \
     --anno-file imagenet/lmdb/train_lmdb --global-batch-size 512 --ckpt-every 10000 --ema --log-every 1 --results-dir output \
@@ -157,6 +162,11 @@ scripts/autoregressive/torchrun.sh train_c2i.py --gpt-type c2i --image-size 336 
 
 2. Resume from an AR generative checkpoint
 ```bash
+export NODE_COUNT=1
+export NODE_RANK=0
+export PROC_PER_NODE=8
+export MASTER_PORT=12333
+export MASTER_ADDR=localhost 
 model_type='GPT-L'
 scripts/autoregressive/torchrun.sh train_c2i.py --gpt-type c2i --image-size 336 --gpt-model ${model_type} --downsample-size 16 --num-workers 4   \
     --anno-file imagenet/lmdb/train_lmdb --global-batch-size 512 --ckpt-every 10000 --ema --log-every 1 --results-dir output \
@@ -166,22 +176,47 @@ scripts/autoregressive/torchrun.sh train_c2i.py --gpt-type c2i --image-size 336 
 
 ### 4. Evaluation (ImageNet 256x256)
 
-1. Evaluated a pretrained tokenizer (see ```scripts/tokenizer/run_tok.sh```):
+1. Evaluated a pretrained discrete tokenizer VFMTok (see ```scripts/tokenizer/test_tok.sh```):
 
 ```bash
 scripts/autoregressive/torchrun.sh vqgan_test.py --vq-model VQ-16 --image-size 336 --output_dir recons --batch-size $1   \
-        --z-channels 512 --vq-ckpt tokenizer/vfmtok-tokenizer.pt --codebook-slots-embed-dim 12
+        --z-channels 512 --vq-ckpt tokenizer/vfmtok-tokenizer.pt --embed-dim 12
 ```
 
-2. Evaluate a pretrained AR generative model (see ```scripts/autoregressive/run_test.sh```)
+
+
+2. Evaluate a pretrained continuous-valued tokenizer - VFMAE (see ```scripts/tokenizer/test_ae.sh```)
+```bash
+export NODE_COUNT=1
+export NODE_RANK=0
+export PROC_PER_NODE=8
+export MASTER_PORT=65331
+scripts/autoregressive/torchrun.sh ae_test.py --transformer-config-file configs/vfmae/vfmae_config.yaml --image-size 256 \
+        --batch-size $1 --anno-file imagenet/lmdb/val_lmdb --ae-ckpt DINOv2/tokenizer/vfmae-tokenizer.pt \
+        --embed-dim 32 2>&1 | tee 'test2.log'
+```
+
+3. Evaluate a pretrained AR generative model (see ```scripts/autoregressive/run_test.sh```)
 
 ```bash
 model_type='GPT-L' # 'GPT-B' 'GPT-XL' 'GPT-XXL' 'GPT-2B'
-scripts/autoregressive/torchrun.sh test_net.py --vq-ckpt tokenizer/vfmtok-tokenizer.pt            \
-    --gpt-ckpt snapshot/model_dump/${model_type}-$1.pt --compile --gpt-model ${model_type} --image-size 336 \
+scripts/autoregressive/torchrun.sh test_c2i.py --vq-ckpt DINOv2/tokenizer/vfmtok-tokenizer.pt            \
+    --gpt-ckpt DINOv2/${model_type}/${model_type}-$1e.pt --compile --gpt-model ${model_type} --image-size 336 \
     --sample-dir samples --image-size-eval 256 --cfg-scale $2 --precision bf16 --per-proc-batch-size $3   \
-    --codebook-slots-embed-dim 12 --latent-size 16
+    --embed-dim 12 --latent-size 16
 ```
+
+4. Evaluated a pretrained denoising generative model (see ```scripts/denoise/run_test.sh```)
+```bash
+saveDir='samples'
+mkdir -p ${saveDir}
+model_name='DiTDH-XL-$1e.pt'
+cfg_file='configs/denoise/sampling/ImageNet256/DiTDHXL-DINOv2-B_AG.yaml'
+scripts/autoregressive/torchrun.sh test_net.py --config ${cfg_file} --compile --sample-dir ${saveDir} --precision bf16  \
+    --label-sampling equal --ckpt output/sota/${model_name}.pt --per-proc-batch-size $2 --embed-dim 32      \
+    --stats-file stats/stats-500.pt --ae-ckpt DINOv2/tokenizer/vfmae-tokenizer.pt --cfg-scale $3
+```
+
 ## Citation
 
 If you find VFMTok useful for your research and applications, please kindly cite using this BibTeX:
