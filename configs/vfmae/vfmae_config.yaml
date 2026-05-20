@@ -1,6 +1,5 @@
 encoder_config:
   target: tokenizer.vfmae.layers.Encoder
-  # target: paintmind.titok.layers.Encoder
   params:
     layer_type: normal
     image_size: 256
@@ -16,7 +15,6 @@ encoder_config:
     enc_n_points: 4
     visual_encoder_config:
       target: commons.modules.encoders.pretrained_enc_arch.SelfSupervisedCondtionEmbedder
-      # target: paintmind.modules.encoders.pretrained_enc_arch.SelfSupervisedCondtionEmbedder
       is_trainable: False
       params:
         pretrained_enc_arch: dinov2_vitl14_reg
@@ -28,8 +26,6 @@ encoder_config:
 
 decoder_config:
   target: tokenizer.vfmae.layers.Decoder
-  # target: paintmind.titok.layers.Decoder
-  # target: modules.encoders.pretrained_enc_arch.SelfSupervisedCondtionEmbedder
   params:
     layer_type: normal
     image_size: ${encoder_config.params.image_size}

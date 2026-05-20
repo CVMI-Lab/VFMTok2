@@ -1,5 +1,4 @@
 encoder_config:
-  # target: vfmtok.core.layers.Encoder
   target: tokenizer.vfmtok.layers.Encoder
   params:
     layer_type: normal
@@ -15,7 +14,6 @@ encoder_config:
     n_carrier: 256
     enc_n_points: 4
     visual_encoder_config:
-      # target: vfmtok.modules.encoders.pretrained_enc_arch.SelfSupervisedCondtionEmbedder
       target: commons.modules.encoders.pretrained_enc_arch.SelfSupervisedCondtionEmbedder
       is_trainable: False
       params:
