@@ -70,10 +70,10 @@ In this repo, we release:
 ### 1. tokenizer models
 In this repo, we release two image tokenizer: VFMTok(DINOv2) and VFMAE(DINOv2). They directly utilizes the features from the frozen pre-trained VFM -- DINOv2, to reconstruct the image. Besides, we also designs 2 key components: **region-adaptive sampling** and **semantic reconstruction** to reduce the redundancy in the pretrained features and maintain the semantic fidelity, respectively.
 
-Method | tokens | rFID (256x256) | rIS (256x256)    | weight
----    | :---:  |:---:|:---:   | :---: 
-VFMTok |  256   | 0.98 | 215.4   | [vfmtok-tokenizer.pt](https://huggingface.co/yexiguafu/VFMTok/blob/main/DINOv2/tokenizer/vfmtok-tokenizer.pt)
-VFMAE  |  256   | 0.29 | 225.6   | [vfmae-tokenizer.pt](https://huggingface.co/yexiguafu/VFMTok/blob/main/DINOv2/tokenizer/vfmae-tokenizer.pt)
+Method | tokens | rFID (256x256) | rIS (256x256) |PSNR | SSIM   | weight
+---    | :---:  |:---:|:---: | :---: | :---:  | :---: 
+VFMTok |  256   | 0.98 | 215.4  | 20.6 | 0.67 | [vfmtok-tokenizer.pt](https://huggingface.co/yexiguafu/VFMTok/blob/main/DINOv2/tokenizer/vfmtok-tokenizer.pt)
+VFMAE  |  256   | 0.29 | 225.6  | 25.5 | 0.82 | [vfmae-tokenizer.pt](https://huggingface.co/yexiguafu/VFMTok/blob/main/DINOv2/tokenizer/vfmae-tokenizer.pt)
 
 ### 2. AR generation models with classifier-free guidance (CFG).
 Once the trained VFMTok(DINOv2) is integrated into autoregressive (AR) generative models, it ahieves notable image generation performance.
