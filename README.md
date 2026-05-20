@@ -29,7 +29,7 @@ This repo contains:
 - [2025/09/18] 🔥 **VFMTok has been accepted by NeurIPS 2025!** 🔥
 - [2025/10/11] 🔥 [Image tokenizers](https://huggingface.co/yexiguafu/VFMTok/tree/main/DINOv2/tokenizer) and [AR models](https://huggingface.co/yexiguafu/VFMTok/tree/main/DINOv2) for class-conditional image generation are released. 🔥
 - [2025/10/11] 🔥 All codes of VFMTok have been released. 🔥
-- [2026/05/20] 🔥 Continuous-valued [**VFMAE**](https://huggingface.co/yexiguafu/VFMTok/tree/main/DINOv2/tokenizer) for [denoising generative models](https://huggingface.co/yexiguafu/VFMTok/tree/main/DINOv2/DiTDH-XL) has been released, Checkout the [paper](https://arxiv.org/pdf/2605.18390v1) for details. 🔥
+- [2026/05/20] 🔥 Continuous-valued [VFMAE](https://huggingface.co/yexiguafu/VFMTok/tree/main/DINOv2/tokenizer) for [denoising generative models](https://huggingface.co/yexiguafu/VFMTok/tree/main/DINOv2/DiTDH-XL) has been released, Checkout the [paper](https://arxiv.org/pdf/2605.18390v1) for details. 🔥
 
 ## Contents
 - [Install](#install)
@@ -98,6 +98,18 @@ Method   | params | epochs | FID | sFID |  IS  | Pre. | Rec. |
 [VFMTok-XXL](https://huggingface.co/yexiguafu/VFMTok/blob/main/DINOv2/GPT-XXL/GPT-XXL-200e.pt) | 1.4B   |  200   | 2.09 | 5.48 | 259.3 | 0.82 | 0.61 |
 [VFMTok-2B](https://huggingface.co/yexiguafu/VFMTok/blob/main/DINOv2/GPT-2B/GPT-2B-200e.pt) | 2.0B   |  200   | 2.20 | 5.54 | 279.7 | 0.82 | 0.61 |
 [VFMTok-3B](https://huggingface.co/yexiguafu/VFMTok/blob/main/DINOv2/GPT-3B/GPT-3B-200e.pt)| 3.1B   |  200   | 2.04 | 5.43 | 267.8 | 0.82 | 0.61 |
+
+### 4. Denoising generation with CFG ([AutoGuidance](https://arxiv.org/pdf/2406.02507)).
+Method   | params | epochs | FID | sFID |  IS  | Pre. | Rec. |
+---      | :---:  | :---:  | :---:| :---: |:---: | :---:|:---:|
+DiTDH-XL(VFMAE) | 839M | 80 | 1.68 | 6.10 | 217.5|  0.74| 0.68|
+DiTDH-XL(VFMAE) | 839M |800 | 1.25 | 5.84 | 294.0|  0.77| 0.69|
+
+### 5, Denosing generation without CFG.
+Method   | params | epochs | FID | sFID |  IS  | Pre. | Rec. |
+---      | :---:  | :---:  | :---:| :---: |:---: | :---:|:---:|
+DiTDH-XL(VFMAE) | 839M | 80 |3.29 | 6.17 | 176.5 | 0.75 | 0.64|
+DiTDH-XL(VFMAE) | 839M |800 |1.65 | 5.78 | 240.9 |0.76  | 0.67|
 
 ## Training
 
