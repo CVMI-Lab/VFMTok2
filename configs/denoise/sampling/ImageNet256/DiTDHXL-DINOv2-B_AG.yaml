@@ -57,7 +57,7 @@ guidance:
       use_rmsnorm: True
       wo_shift: False
       use_pos_embed: True
-    ckpt: 'output/sota/0050000.pt'
+    ckpt: 'output/sota/DiTDH-XL_20e.pt'
 
 misc:
   latent_size: [32, 16, 16] # [C, H, W]

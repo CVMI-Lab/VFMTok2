@@ -73,7 +73,7 @@ In this repo, we release two image tokenizer: VFMTok(DINOv2) and VFMAE(DINOv2). 
 Method | tokens | rFID (256x256) | rIS (256x256) |PSNR | SSIM   | weight
 ---    | :---:  |:---:|:---: | :---: | :---:  | :---: 
 VFMTok |  256   | 0.98 | 215.4  | 20.6 | 0.67 | [vfmtok-tokenizer.pt](https://huggingface.co/yexiguafu/VFMTok/blob/main/DINOv2/tokenizer/vfmtok-tokenizer.pt)
-VFMAE  |  256   | 0.29 | 225.6  | 25.5 | 0.82 | [vfmae-tokenizer.pt](https://huggingface.co/yexiguafu/VFMTok/blob/main/DINOv2/tokenizer/vfmae-tokenizer.pt)
+VFMAE  |  256   | 0.29 | 225.6  | 25.5 | 0.82 | [vfmae-tokenizer.pt](https://huggingface.co/yexiguafu/VFMTok/blob/main/tokenizer/vfmae-tokenizer.pt)
 
 ### 2. AR generation models with classifier-free guidance (CFG).
 Once the trained VFMTok(DINOv2) is integrated into autoregressive (AR) generative models, it ahieves notable image generation performance.
@@ -102,14 +102,14 @@ Method   | params | epochs | FID | sFID |  IS  | Pre. | Rec. |
 ### 4. Denoising generation with CFG ([AutoGuidance](https://arxiv.org/pdf/2406.02507)).
 Method   | params | epochs | FID | sFID |  IS  | Pre. | Rec. |
 ---      | :---:  | :---:  | :---:| :---: |:---: | :---:|:---:|
-DiTDH-XL(VFMAE) | 839M | 80 | 1.68 | 6.10 | 217.5|  0.74| 0.68|
-DiTDH-XL(VFMAE) | 839M |800 | 1.25 | 5.84 | 294.0|  0.77| 0.69|
+[DiTDH-XL(VFMAE)](https://huggingface.co/yexiguafu/VFMTok/blob/main/DiTDH-XL/DiTDH-XL_80e.pt) | 839M | 80 | 1.68 | 6.10 | 217.5|  0.74| 0.68|
+[DiTDH-XL(VFMAE)](https://huggingface.co/yexiguafu/VFMTok/blob/main/DiTDH-XL/DiTDH-XL_80e.pt) | 839M |800 | 1.25 | 5.84 | 294.0|  0.77| 0.69|
 
 ### 5, Denosing generation without CFG.
 Method   | params | epochs | FID | sFID |  IS  | Pre. | Rec. |
 ---      | :---:  | :---:  | :---:| :---: |:---: | :---:|:---:|
-DiTDH-XL(VFMAE) | 839M | 80 |3.29 | 6.17 | 176.5 | 0.75 | 0.64|
-DiTDH-XL(VFMAE) | 839M |800 |1.65 | 5.78 | 240.9 |0.76  | 0.67|
+[DiTDH-XL(VFMAE)](https://huggingface.co/yexiguafu/VFMTok/blob/main/DiTDH-XL/DiTDH-XL_80e.pt) | 839M | 80 |3.29 | 6.17 | 176.5 | 0.75 | 0.64|
+[DiTDH-XL(VFMAE)](https://huggingface.co/yexiguafu/VFMTok/blob/main/DiTDH-XL/DiTDH-XL_800e.pt) | 839M |800 |1.65 | 5.78 | 240.9 |0.76  | 0.67|
 
 ## Training
 
