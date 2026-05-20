@@ -1,5 +1,5 @@
 
-# Vision Foundation Models as Generalist Visual Tokenizers for Autoregressive Generation <br><sub>Official PyTorch Implementation</sub>
+# Vision Foundation Models as Generalist Tokenizers for Image Generation <br><sub>Official PyTorch Implementation</sub>
 
 [![arXiv](https://img.shields.io/badge/arXiv-2605.18390-b31b1b.svg)](https://arxiv.org/abs/2605.18390)&nbsp;
 [![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20HuggingFace-VFMTok-yellow)](https://huggingface.co/yexiguafu/VFMTok)&nbsp;
@@ -8,10 +8,6 @@
 <p align="center">
 <img src="assets/vfmtok-flowchart.png" width=95%>
 <p>
-
-<!-- This is a PyTorch/GPU implementation of the paper **Vision Foundation Models as Generalist Visual Tokenizers for Autoregressive Generation**, which directly utilizes **the features from the frozen pre-trained vision foundation model (VFM) to reconstruct the original image**. To achieve this, VFMTok innovatively designed two key components: (1) a **region-adaptive sampling** framework that reduces redundancy in the pre-trained features on regular 2D grids, and (2) a semantic reconstruction objective that aligns the tokenizer’s outputs with the foundation model’s representations to preserve semantic fidelity. Once the trained VFMTok is integrated into the autoregressive (AR) generative models, it achieves notable results on the class-to-image generation task, while accelerating convergence by a factor of three. Besides, it also enables high-fidelity class-conditional synthesis **without the requirement of a CFG (classifier-free guidance)**.
-
-Besides, VFMTok can also achieve **new state-of-the-art image synthesis quality** on the task of class-to-image generation. Please check in [this](https://github.com/CVMI-Lab/VFMTok-RAR) repository. -->
 
 This is a PyTorch/GPU implementation of the paper **Vision Foundation Models as Generalist Tokenizers for Image Generation**, which is a further extension of the previous work **Vision Foundation Models as Effective Visual Tokenizers for Autoregressive Image Generation**. This work builds upon the idea of previous work, which directly **utilizes features from the frozen pre-trained vision foundation model (VFM) to reconstruct the original image**. However, the previous work only built a discrete tokenizer based on VFM for autoregressive (AR) image synthesis, leaving continuous-valued image reconstruction and generation under-explored. 
 
@@ -246,12 +242,13 @@ scripts/autoregressive/torchrun.sh test_net.py --config ${cfg_file} --compile --
 
 If you find VFMTok useful for your research and applications, please kindly cite using this BibTeX:
 ```
-@article{zheng2026vision,
+@article{vfm-genralist,
   title={Vision Foundation Models as Generalist Tokenizers for Image Generation},
   author={Zheng, Anlin and Han, Qi and Wen, Xin and Ma, Chuofan and Gong, Lanxi and Yu, Gang and Zhang, Xiangyu and Qi, Xiaojuan},
   journal={arXiv preprint arXiv:2605.18390},
   year={2026}
 }
+
 ```
 
 ## License
