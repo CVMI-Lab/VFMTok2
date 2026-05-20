@@ -246,11 +246,11 @@ scripts/autoregressive/torchrun.sh test_net.py --config ${cfg_file} --compile --
 
 If you find VFMTok useful for your research and applications, please kindly cite using this BibTeX:
 ```
-@article{zheng2025vision,
-  title={Vision Foundation Models as Effective Visual Tokenizers for Autoregressive Image Generation},
-  author={Zheng, Anlin and Wen, Xin and Zhang, Xuanyang and Ma, Chuofan and Wang, Tiancai and Yu, Gang and Zhang, Xiangyu and Qi, Xiaojuan},
-  journal={arXiv preprint arXiv:2507.08441},
-  year={2025}
+@article{zheng2026vision,
+  title={Vision Foundation Models as Generalist Tokenizers for Image Generation},
+  author={Zheng, Anlin and Han, Qi and Wen, Xin and Ma, Chuofan and Gong, Lanxi and Yu, Gang and Zhang, Xiangyu and Qi, Xiaojuan},
+  journal={arXiv preprint arXiv:2605.18390},
+  year={2026}
 }
 ```
 
@@ -260,7 +260,7 @@ The majority of this project is licensed under Apacha 2.0 License. Portions of t
 
 ## Acknowledgement
 
-Our codebase builds upon several excellent open-source projects, including [LlamaGen](https://github.com/FoundationVision/LlamaGen), [Deformable DETR](https://github.com/fundamentalvision/Deformable-DETR), [Hita](https://github.com/CVMI-Lab/Hita) and [Paintmind](https://github.com/Qiyuan-Ge/PaintMind). We are grateful to the communities behind them.
+Our codebase builds upon several excellent open-source projects, including [LlamaGen](https://github.com/FoundationVision/LlamaGen), [Deformable DETR](https://github.com/fundamentalvision/Deformable-DETR), [Hita](https://github.com/CVMI-Lab/Hita), [Paintmind](https://github.com/Qiyuan-Ge/PaintMind) and [RAE](https://github.com/bytetriper/RAE). We are grateful to the communities behind them.
 
 ## Contact
 This codebase has been cleaned up but has not undergone extensive testing. If you encounter any issues or have questions, please open a GitHub issue. We appreciate your feedback!
