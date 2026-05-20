@@ -69,9 +69,9 @@ bash make.sh
 In this repo, we release:
 * Town image tokenizers: disrete **VFMTok(DINOv2)** and continuous-valued **VFMAE(DINOv2)**
 * Class-conditional autoregressive generative models ranging from **111M** to **3B** parameters.
-* Class-conditional denoising generative models **DiTDH-XL** inheretted from [RAE](https://arxiv.org/pdf/2510.11690).
+* Class-conditional denoising generative models **DiTDH-XL**, whose architecture is inheretted from [RAE](https://arxiv.org/pdf/2510.11690).
 
-### 1. VQ-VAE models
+### 1. tokenizer models
 In this repo, we release two image tokenizer: VFMTok(DINOv2) and VFMAE(DINOv2). They directly utilizes the features from the frozen pre-trained VFM -- DINOv2, to reconstruct the image. Besides, we also designs 2 key components: **region-adaptive sampling** and **semantic reconstruction** to reduce the redundancy in the pretrained features and maintain the semantic fidelity, respectively.
 
 Method | tokens | rFID (256x256) | rIS (256x256)    | weight
@@ -174,13 +174,39 @@ scripts/autoregressive/torchrun.sh train_c2i.py --gpt-type c2i --image-size 336 
     --gpt-ckpt output/vanilla/${model_type}/${model_type}-{ckpt_name}.pt
 ```
 
-### 4. Evaluation (ImageNet 256x256)
+### 4. Denoising model training
+1. Training denoising generative models (see ```scripts/denoise/run_train.sh```)
+```bash
+export NODE_COUNT=1
+export NODE_RANK=0
+export PROC_PER_NODE=8
+export MASTER_PORT=22331
+export MASTER_ADDR=localhost
+config_file='configs/denoise/training/ImageNet256/DiTDH-XL_DINOv2-B.yaml'
+scripts/autoregressive/torchrun.sh train_c2i.py --config ${config_file} --data-path imagenet/lmdb/train_lmdb       \
+    --image-size 256 --results-dir output/snapshot --precision fp32 --embed-dim 32  --z-channels 512      \
+    --ae-ckpt DINOv2/tokenizer/vfmae-tokenizer.pt --stats-file stats/stats-500.pt --compile --ckpt ${RESUME_CKPT}
+```
+
+2. Resume from a denoising generative model
+```bash
+export NODE_COUNT=$1
+export NODE_RANK=$2
+export PROC_PER_NODE=8
+export MASTER_PORT=22331
+export MASTER_ADDR=localhost
+config_file='configs/denoise/training/ImageNet256/DiTDH-XL_DINOv2-B.yaml'
+scripts/autoregressive/torchrun.sh train_c2i.py --config ${config_file} --data-path imagenet/lmdb/train_lmdb       \
+    --image-size 256 --results-dir output/snapshot --precision fp32 --embed-dim 32  --z-channels 512      \
+    --ae-ckpt DINOv2/tokenizer/vfmae-tokenizer.pt --stats-file stats/stats-500.pt --compile       \
+```
+### 5. Evaluation (ImageNet 256x256)
 
 1. Evaluated a pretrained discrete tokenizer VFMTok (see ```scripts/tokenizer/test_tok.sh```):
 
 ```bash
 scripts/autoregressive/torchrun.sh vqgan_test.py --vq-model VQ-16 --image-size 336 --output_dir recons --batch-size $1   \
-        --z-channels 512 --vq-ckpt tokenizer/vfmtok-tokenizer.pt --embed-dim 12
+        --z-channels 512 --vq-ckpt tokenizer/vfmtok-tokenizer.pt --transformer-config-file configs/vfmtok/vfmtok_config.yaml --embed-dim 12
 ```
 
 
@@ -192,8 +218,7 @@ export NODE_RANK=0
 export PROC_PER_NODE=8
 export MASTER_PORT=65331
 scripts/autoregressive/torchrun.sh ae_test.py --transformer-config-file configs/vfmae/vfmae_config.yaml --image-size 256 \
-        --batch-size $1 --anno-file imagenet/lmdb/val_lmdb --ae-ckpt DINOv2/tokenizer/vfmae-tokenizer.pt \
-        --embed-dim 32 2>&1 | tee 'test2.log'
+        --batch-size $1 --anno-file imagenet/lmdb/val_lmdb --ae-ckpt DINOv2/tokenizer/vfmae-tokenizer.pt --embed-dim 32
 ```
 
 3. Evaluate a pretrained AR generative model (see ```scripts/autoregressive/run_test.sh```)
