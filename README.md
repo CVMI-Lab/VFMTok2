@@ -101,7 +101,7 @@ Method   | params | epochs | FID | sFID |  IS  | Pre. | Rec. |
 
 ### 4. Denoising generation with CFG ([AutoGuidance](https://arxiv.org/pdf/2406.02507)).
 Method   | params | epochs | FID | sFID |  IS  | Pre. | Rec. |
----      | :---:  | :---:  | :---:| :---: |:---: | :---:|:---:|
+---      | :---:  |  :---: | :---:| :---: |:---: | :---:|:---:|
 [DiTDH-XL(VFMAE)](https://huggingface.co/yexiguafu/VFMTok/blob/main/DiTDH-XL/DiTDH-XL_80e.pt) | 839M | 80 | 1.68 | 6.10 | 217.5|  0.74| 0.68|
 [DiTDH-XL(VFMAE)](https://huggingface.co/yexiguafu/VFMTok/blob/main/DiTDH-XL/DiTDH-XL_80e.pt) | 839M |800 | 1.25 | 5.84 | 294.0|  0.77| 0.69|
 

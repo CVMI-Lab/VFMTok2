@@ -137,8 +137,8 @@ class Encoder(nn.Module):
 
 class Decoder(nn.Module):
     
-    def __init__(self, layer_type, image_size, patch_size, dim, n_carrier, depth,
-                 num_head, mlp_dim, dim_head=64, dropout=0., num_register_tokens=4,):
+    def __init__(self, layer_type, image_size, patch_size, dim, n_carrier, num_head,
+                 mlp_dim, depth=4, dim_head=64, dropout=0., num_register_tokens=4,):
         
         super().__init__()
         
@@ -158,7 +158,7 @@ class Decoder(nn.Module):
         self.dino_mask = nn.Parameter(torch.randn(1, 1, dim) * scale)
         self.cls_token = nn.Parameter(torch.randn(1, 1, dim) * scale)
 
-        self.transformer = Transformer(layer_type, dim, 4, num_head, dim_head, mlp_dim, dropout, xformer=False)
+        self.transformer = Transformer(layer_type, dim, depth, num_head, dim_head, mlp_dim, dropout, xformer=False)
         self.dino_transformer = Transformer(layer_type, dim, 1, num_head, dim_head, mlp_dim, dropout, xformer=False)
         
         self.norm_post1 = nn.LayerNorm(dim)

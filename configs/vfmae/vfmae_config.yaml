@@ -31,7 +31,6 @@ decoder_config:
     image_size: ${encoder_config.params.image_size}
     patch_size: ${encoder_config.params.patch_size}
     dim: ${encoder_config.params.dim}
-    depth: ${encoder_config.params.depth}
     num_head: ${encoder_config.params.num_head}
     mlp_dim: ${encoder_config.params.mlp_dim}
     dim_head: ${encoder_config.params.dim_head}
