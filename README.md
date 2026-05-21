@@ -63,7 +63,7 @@ bash make.sh
 ## Model Zoom
 
 In this repo, we release:
-* Town image tokenizers: disrete **VFMTok(DINOv2)** and continuous-valued **VFMAE(DINOv2)**
+* Two image tokenizers: disrete **VFMTok(DINOv2)** and continuous-valued **VFMAE(DINOv2)**
 * Class-conditional autoregressive generative models ranging from **111M** to **3B** parameters.
 * Class-conditional denoising generative models **DiTDH-XL**, whose architecture is inheretted from [RAE](https://arxiv.org/pdf/2510.11690).
 
