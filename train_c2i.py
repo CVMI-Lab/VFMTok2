@@ -340,7 +340,6 @@ def main(args):
 
     for epoch in range(start_epoch + 1, epochs):
 
-        sampler.set_epoch(0)
         logger.info(f"Beginning epoch {epoch}...")
 
         for indice, (x, y) in enumerate(loader):
