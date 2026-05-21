@@ -72,7 +72,7 @@ In this repo, we release two image tokenizer: VFMTok(DINOv2) and VFMAE(DINOv2). 
 
 Method | tokens | rFID (256x256) | rIS (256x256) |PSNR | SSIM   | weight
 ---    | :---:  |:---:|:---: | :---: | :---:  | :---: 
-VFMTok |  256   | 0.98 | 215.4  | 20.6 | 0.67 | [vfmtok-tokenizer.pt](https://huggingface.co/yexiguafu/VFMTok/blob/main/DINOv2/tokenizer/vfmtok-tokenizer.pt)
+VFMTok |  256   | 0.89 | 215.4  | 20.6 | 0.67 | [vfmtok-tokenizer.pt](https://huggingface.co/yexiguafu/VFMTok/blob/main/DINOv2/tokenizer/vfmtok-tokenizer.pt)
 VFMAE  |  256   | 0.29 | 225.6  | 25.5 | 0.82 | [vfmae-tokenizer.pt](https://huggingface.co/yexiguafu/VFMTok/blob/main/tokenizer/vfmae-tokenizer.pt)
 
 ### 2. AR generation models with classifier-free guidance (CFG).
